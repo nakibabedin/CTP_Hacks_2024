@@ -9,6 +9,7 @@ with open('keys/gemini_api_key.txt', 'r') as file:
 genai.configure(api_key=api_key)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
-response = model.generate_content("Say Hi to me in 5 words")
-print(response.text)
-
+# function to send a request to Gemini
+def ask_gemini(prompt):
+    response = model.generate_content(prompt)
+    return response.text
