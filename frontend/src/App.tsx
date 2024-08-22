@@ -1,5 +1,5 @@
 import {useState} from 'react'
-// import {fetchEndpoint} from './functions/fetchEndpoint';
+// import {createResource} from './functions/createResource';
 import './App.css'
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
 
     // useEffect(() => {
     // 	const getMsg = async () => {p
-    // 		const res = await fetchEndpoint('/');
+    // 		const res = await createResource('/');
     // 		setData(res.message);
     // 	}
     //

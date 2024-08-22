@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './Create.css';
+import {createResource} from "./functions/createResource.ts";
 
-type FormData = {
+export type FormData = {
     campus: string;
     name: string;
     location: string;
@@ -40,6 +41,8 @@ const Create = () => {
         e.preventDefault();
         console.log('Form Data:', formData);
         // You can handle form data here, such as sending it to an API
+
+        createResource(formData);
     };
 
     return (
