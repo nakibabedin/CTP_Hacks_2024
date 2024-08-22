@@ -20,10 +20,5 @@ def create_resource():
     Firebase.add_resource(campus_code, resource_name, resource_data)
     return "hello world"
 
-    
-
-
-
-
 if __name__ == '__main__':
     app.run(debug=True)

@@ -29,3 +29,5 @@ def get_keywords():
     ref = db.reference("all_keywords")
     return ref.get()
 
+ref = db.reference()
+ref.update({"CUNY": {"resource":"resource"}})
