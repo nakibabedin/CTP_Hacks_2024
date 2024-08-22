@@ -11,6 +11,10 @@ def process_description(data):
     data['keywords'] = keywords
     return data 
 
+def process_situation( user_situation ):
+    return gemini.categorize_text_keywords( user_situation )
+    
+
 # TESTING
 
 # resource_data = {

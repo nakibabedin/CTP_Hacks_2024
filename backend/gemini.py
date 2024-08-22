@@ -38,6 +38,7 @@ def get_keywords_from_description(description):
            ''')
     return response.split(",") 
 
+
 def categorize_text_keywords(text):
     keywords = firebase.get_keywords()
     response = ask_gemini( '''
