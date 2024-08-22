@@ -21,8 +21,9 @@ def get_data_for_campus(campus):
 def append_to_keywords(new_keywords):
     ref = db.reference("all_keywords")
     curr_keywords = ref.get()
-    curr_keywords += new_keywords
-    ref.set(curr_keywords)
+    curr_keywords_set = set(curr_keywords)
+    curr_keywords_set = curr_keywords_set.union(set(new_keywords))
+    ref.set(list(curr_keywords_set))
     return
 
 def get_keywords():
