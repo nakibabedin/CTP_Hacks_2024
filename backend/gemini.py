@@ -11,8 +11,16 @@ model = genai.GenerativeModel('gemini-1.5-flash')
 
 # function to send a request to Gemini
 def ask_gemini(prompt):
-    response = model.generate_content(prompt)
-    return response.text
+    response = model.generate_content(prompt,
+        generation_config=genai.types.GenerationConfig(
+            candidate_count=1,
+            max_output_tokens=60,
+            temperature=0.1,
+        ),
+    )
+    print(response.candidates[0].content.parts[0].text)
+
+    return response.candidates[0].content.parts[0].text
 
 # returns a list of keywords from a resource description
 def get_keywords_from_description(description):
@@ -49,9 +57,9 @@ def categorize_text_keywords(text):
 
 # student_in_distress = "Help, I need childcare services for my baby"
 # student_in_distress2 = "Help, I need some study resources"
-
+#
 # print(categorize_text_keywords(student_in_distress2))
-
+#
 
 
 

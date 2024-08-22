@@ -3,7 +3,7 @@ import firebase
 
 # returns a new data obj with a keywords field
 # also adds the keywords to realtime database
-def process_description_keywords(data):
+def process_description(data):
     description = data['description']
     keywords = gemini.get_keywords_from_description(description)
     firebase.append_to_keywords(keywords)
