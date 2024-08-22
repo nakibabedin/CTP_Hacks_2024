@@ -1,7 +1,8 @@
 from flask import Flask, request
 from flask_cors import CORS
-import Firebase
 import json
+import firebase
+import keywords_parser
 
 app = Flask(__name__)
 CORS(app) 
@@ -15,9 +16,9 @@ def create_resource():
     frontend_request = request.get_json()
     campus_code = frontend_request['campus']
     resource_name = frontend_request['name']
-    resource_data = frontend_request['data']
+    resource_data = keywords_parser.process_description(frontend_request['data'])
 
-    Firebase.add_resource(campus_code, resource_name, resource_data)
+    firebase.add_resource(campus_code, resource_name, resource_data)
     return "hello world"
 
 if __name__ == '__main__':
