@@ -5,15 +5,16 @@ with open('keys/database_url.txt') as file:
     database_url = file.read()
 
 cred = credentials.Certificate("keys/coogle-db.json")
-# firebase_admin.initialize_app(cred)
 firebase_admin.initialize_app(cred, {
     'databaseURL': f'{database_url}'
 })
 
-# write data to the root
-ref = db.reference()
-ref.set({
-    'key1': 'value1',
-    'key2': 'value2',
-    'key3': 'value3'
-})
+def add_resource(campus, resource_name, resource_data):
+    ref = db.reference(f'/{campus}')
+    ref.update({ resource_name:resource_data })
+
+# returns a python dictionary if a JSON obj
+def get_data_for_campus(campus):
+    ref = db.reference(f'/{campus}')
+    return ref.get()
+    
