@@ -1,7 +1,9 @@
 import './Search.css'
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import SearchResult, {Campus} from "./components/SearchResource.tsx";
 import {Resource} from "./components/SearchResource.tsx";
+import {useState} from "react";
+import {searchResources} from "./functions/searchResources.ts";
 
 export const campuses = {
     CUNY: 'CUNY',
@@ -20,20 +22,39 @@ export const campuses = {
 function Search() {
     const location = useLocation();
 
-    const query = location.state.query;
-    const campus : Campus = location.state.campus;
+    const [campus, setCampus] = useState<Campus>(location.state.campus);
+    const [query, setQuery] = useState(location.state.query);
+
+    const navigate = useNavigate();
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setQuery(e.target.value);
+    }
+
+    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setCampus(e.target.value as Campus);
+    }
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const res = await searchResources(campus, query);
+        console.log(res.message);
+
+        navigate('/search', { state: { query: query, campus: campus, results: res.results } });
+    }
+
     const results = location.state.results;
 
-    console.log(location.state.campus)
+    for (const result of results)
+        console.log(result)
 
     return (
-        <>
-            <h1 className='logo'>Project Name</h1>
-
-            <form className='search-form' style={{gap: '1em', marginBottom: '1em'}}>
+        <div className="search-container">
+            <img className='logo' src='/src/assets/coogle.png' alt='Coogle Logo' height={200}/>
+            <form className='search-form' onSubmit={handleSubmit} style={{gap: '1em', marginBottom: '1em'}}>
                 <div>
                     <label style={{marginRight: '0.7em'}}>Campus:</label>
-                    <select name="campus" id="campus-select" value={campus} required>
+                    <select name="campus" id="campus-select" value={campus} onChange={handleSelectChange} required>
                         <option value='' disabled>Select a campus</option>
                         <option value="BRCH">Baruch College</option>
                         <option value="BKLN">Brooklyn College</option>
@@ -52,6 +73,8 @@ function Search() {
                     <input
                         placeholder='What do you need?'
                         className='search-input'
+                        value={query}
+                        onChange={handleInputChange}
                         required
                     />
 
@@ -59,8 +82,7 @@ function Search() {
                 </div>
             </form>
 
-            <h5 className="search-query">Results for "{query}" at {campuses[campus]} ({results.length}):</h5>
-
+            <h5 className="search-query">Results for "{query}" at {campuses[location.state.campus as Campus]} ({results.length}):</h5>
 
             <div className="resource-list">
                 {
@@ -69,7 +91,7 @@ function Search() {
                     )
                 }
             </div>
-        </>
+        </div>
     )
 }
 

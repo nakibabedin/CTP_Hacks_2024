@@ -1,29 +1,32 @@
+.search-container {
+    max-width: 1000px;
+}
+
 .resource-list {
     display: flex;
     flex-direction: column;
     gap: 2em;
-
-    max-width: 1000px;
 }
 .search-query {
     align-self: flex-start;
     text-align: start;
+    font-weight: normal;
 }
 
 @media (max-width: 1200px) {
-    .resource-list {
+    .search-container {
         max-width: 600px;
     }
 }
 
 @media (max-width: 768px) {
-    .resource-list {
+    .search-container {
         max-width: 400px;
     }
 }
 
 @media (max-width: 480px) {
-    .resource-list {
+    .search-container {
         max-width: 300px;
     }
 }

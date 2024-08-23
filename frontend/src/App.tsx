@@ -10,15 +10,6 @@ function App() {
 
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    // 	const getMsg = async () => {p
-    // 		const res = await createResource('/');
-    // 		setData(res.message);
-    // 	}
-    //
-    // 	getMsg();
-    // }, []);
-
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
     }
@@ -37,10 +28,10 @@ function App() {
 
     return (
         <>
-            <h1 className='logo'>Project Name</h1>
+            <img className='logo' src='/src/assets/coogle.png' alt='Coogle Logo' height={200}/>
             <form className='search-form' onSubmit={handleSubmit}>
                 <div>
-                    <label style={{marginRight: '0.7em'}}>Campus:</label>
+                <label style={{marginRight: '0.7em'}}>Campus:</label>
                     <select name="campus" id="campus-select" value={campus} onChange={handleSelectChange} required>
                         <option value='' disabled>Select a campus</option>
                         <option value="BRCH">Baruch College</option>
