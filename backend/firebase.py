@@ -10,6 +10,8 @@ firebase_admin.initialize_app(cred, {
 })
 
 def add_resource(campus, resource_name, resource_data):
+    if not resource_name:
+        return
     ref = db.reference(f'/{campus}/resource/{resource_name}')
     ref.set( resource_data )
 
