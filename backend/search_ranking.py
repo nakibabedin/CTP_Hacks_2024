@@ -30,8 +30,8 @@ def rank_resources(campus, target_keywords, amount_desired):
         # only find top-amount_desired resources by using heap
         heapq.heappush(rankings, (current_jaccard_similarity, resource_name, resource))
 
-        if len(rankings) == amount_desired:
-                    heapq.heappop(rankings)
+        if len(rankings) == amount_desired+1:
+            heapq.heappop(rankings)
 
 
     # since rankings is sorted as the minimum similarity having the most priority,
