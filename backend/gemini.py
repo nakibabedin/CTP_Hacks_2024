@@ -19,9 +19,6 @@ def ask_gemini(prompt, tokens=256):
             temperature=0.3,
         ),
     )
-#     print(response.candidates[0].content.parts[0].text)
-    if not response.candidates or response.candidates[0]:
-        return ""
 
     return response.candidates[0].content.parts[0].text
 
