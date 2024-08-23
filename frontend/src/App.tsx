@@ -1,6 +1,7 @@
 import {useState} from 'react'
 // import {createResource} from './functions/createResource';
 import './App.css'
+import {searchResources} from "./functions/searchResources.ts";
 
 function App() {
     const [campus, setCampus] = useState('');
@@ -23,10 +24,16 @@ function App() {
         setCampus(e.target.value);
     }
 
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const res = await searchResources(campus, searchQuery);
+        console.log(res);
+    }
+
     return (
         <>
             <h1 className='logo'>Project Name</h1>
-            <form className='search-form'>
+            <form className='search-form' onSubmit={handleSubmit}>
                 <div>
                     <label style={{marginRight: '0.7em'}}>Campus:</label>
                     <select name="campus" id="campus-select" value={campus} onChange={handleSelectChange} required>
