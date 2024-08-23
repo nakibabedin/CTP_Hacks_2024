@@ -1,3 +1,5 @@
+chromedriver
+
 # Make sure not to commit the env stuff
 venv
 .env

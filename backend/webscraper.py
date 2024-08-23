@@ -6,6 +6,7 @@ import firebase
 import keywords_parser
 import json
 import re
+import time
 
 driver = webdriver.Chrome()
 
@@ -32,6 +33,7 @@ for link in links:
 
     # Wait for the page to fully load
     driver.implicitly_wait(7)
+    time.sleep(5)
 
     html = driver.page_source
     soup = BeautifulSoup(html, "html.parser")
@@ -55,12 +57,12 @@ for link in links:
     json_res = json.dumps(res, indent=4)
     print(json_res)
 
-    ans = input("Does this look right? (y/n)\n")
-    if ans == 'n':
-        with open('failed_links.txt', 'a') as f:
-            f.write(link + '\n')
+    # ans = input("Does this look right? (y/n)\n")
+    # if ans == 'n':
+    #     with open('failed_links.txt', 'a') as f:
+    #         f.write(link + '\n')
 
-        continue
+    #     continue
 
     campus_code = res['campus']
     resource_name = res['name']

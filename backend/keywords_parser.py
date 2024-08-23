@@ -6,13 +6,12 @@ import firebase
 def process_description(data):
     description = data['description']
     keywords = gemini.get_keywords_from_description(description)
-    firebase.append_to_keywords(keywords)
-
+    firebase.append_to_keywords( data['campus'], keywords)
     data['keywords'] = keywords
     return data 
 
-def process_situation( user_situation ):
-    return gemini.categorize_text_keywords( user_situation )
+def process_situation(campus, user_query ):
+    return gemini.categorize_text_keywords( campus, user_query )
     
 
 # TESTING

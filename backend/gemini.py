@@ -11,7 +11,7 @@ genai.configure(api_key=api_key)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 # function to send a request to Gemini
-def ask_gemini(prompt, tokens=60):
+def ask_gemini(prompt, tokens=256):
     response = model.generate_content(prompt,
         generation_config=genai.types.GenerationConfig(
             candidate_count=1,
@@ -26,36 +26,38 @@ def ask_gemini(prompt, tokens=60):
 # returns a list of keywords from a resource description
 def get_keywords_from_description(description):
     response = ask_gemini(
-        ''' 
-           Generate a long and comprehensive 
-           list of keywords from the following description of a resource: ''' + description + 
-           '''
+        f''' 
+           Generate a comprehensive list of keywords from the following description of a CUNY resource: 
+           {description} 
 
-           I want it to be in the exact format that i describe:
-           Write each keyword/phrase seperated by a , in a single string.
-           I should be able get a list of keywords by calling response.split(",") in python
-           By keywords, I don't necessarily mean words that appear in the string but also words/phrases that generally describe the description well
+           These keywords should only describe the services provided by this resource and situations where the resource is applicable.
+
+           Return these keywords as a comma-separated list.
+           I should be able to use .split(',') on the response.
+
            Please give me no more than 40 keywords.
-           ''')
+        ''')
     return response.split(",") 
 
 
-def categorize_text_keywords(text):
-    keywords = firebase.get_keywords()
-    response = ask_gemini( '''
-    Here is a list of keywords that I have:
-    ''' + str(keywords) + ''' 
-    and here is a bit of text: 
-    ''' + text + ''' 
-    Can you tell me which keywords are relevant to the text in question? Things should be strongly connected not loosely connected
-    
-    I want it to be in the exact format that i describe:
-    DO NOT just return the exact same keywords as that is not what I want, they should be judged based on how correlated they are
-    Write each keyword/phrase seperated by a , in a single string.
-    I should be able get a list of keywords by calling response.split(",") in python
+def categorize_text_keywords(  campus , query ):
+    keywords = firebase.get_keywords(campus)
+    response = ask_gemini( f'''
+    Given this list of keywords:
+    {str(keywords)} 
+
+    And a CUNY student's situation: 
+    {query}
+
+    Return all keywords relevance to the situation. Generate as many keywords as you reasonably can generate
+    You may also infer what might be useful based on the situation, don't limit yourself to only words that appear in the student's situation. All the words you return must be a direct match with some word/phrase in the list of keywords.
+
+    Return these keywords as a comma-separated list.
+    I should be able to use .split(',') on the response.
     If there are no relevant keywords, return an empty string
-    ''')
-    return response.split(",")
+    ''', tokens=5000)
+    res = response.split(",")
+    return res
 
 # student_in_distress = "Help, I need childcare services for my baby"
 # student_in_distress2 = "Help, I need some study resources"
@@ -71,7 +73,7 @@ def generateResourceSchema(scraped_text):
                               Using this JSON schema:
                                   ResourceData = {{
                                       "campus": string; // This should be the specific CUNY campus this resource is from. Your options are: "BRCH BKLN CSTI HUNT JJAY LMAN MDEV NYCT QNSC CCNY YORK CUNY". CUNY is for resources that are not specific to a campus, and available to all campuses.
-                                      "name": string; // The resource's official name. This should be specific.
+                                      "name": string; // The resource's official name. This should be specific. Make sure not to inlcude any characters that would make this field input an invalid path for the Firebase realtime database (e.g. don't use the special character '.')
                                       "location": string; // Where to physically access the resource. What address, building, room, etc.
                                       "hours": string; // When this resource is available, 24/7, days of the week, time start and end, lunch breaks.
                                       "phone": string; // The primary number to contact. Ensure this is a valid 10 digit phone number without the extension code, return the string with dashes in the spots you would traditionally see them.

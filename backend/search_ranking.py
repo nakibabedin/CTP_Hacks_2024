@@ -20,7 +20,7 @@ def rank_resources(campus, target_keywords, amount_desired):
 
     rankings = []
 
-    print(total_resources.items())
+    # print(total_resources.items())
 
     for resource_name, resource in total_resources.items():
         # find Jaccard similarity
@@ -35,8 +35,8 @@ def rank_resources(campus, target_keywords, amount_desired):
 
 
     result = []
-    while rankings: 
+    while rankings and rankings[0] != 0: 
         result.append( heapq.heappop(rankings) )
 
-    return result[::-1]
+    return  [num for num in result[::-1] if num != 0]
 
