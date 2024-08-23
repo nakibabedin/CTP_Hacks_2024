@@ -21,6 +21,7 @@ def clean_and_parse_json(gemini_output):
         print(f"Failed to parse JSON: {e}")
         return None
 
+input_campus = input('Enter your campus code: ')
 
 with open('links.txt', 'r') as f:
     links = f.read().split('\n')
@@ -44,6 +45,7 @@ for link in links:
 
         continue
 
+    res['campus'] = input_campus
     res['website'] = link
 
     json_res = json.dumps(res, indent=4)
