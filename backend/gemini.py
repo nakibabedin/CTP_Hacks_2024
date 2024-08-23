@@ -48,13 +48,16 @@ def categorize_text_keywords(campus , query):
     And a CUNY student's situation: 
     {query}
 
-    Return 50 keywords that are most important to the situation.
+    Think about possible solutions or resources that could help the student.
+    Return a list of keywords that strongly correlate to those solutions and resources.
+    Avoid words that don't relate to the situation, and the names of campuses.
     All the words you return must be a direct match with some word/phrase in the list of keywords.
+    The list should be unique.
 
     Return these keywords as a comma-separated list.
     I should be able to use .split(',') on the response.
     If there are no relevant keywords, return an empty string
-    ''', tokens=600)
+    ''', tokens=len(query)*10)
     res = response.split(",")
     return res
 
