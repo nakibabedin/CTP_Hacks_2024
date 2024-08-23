@@ -22,7 +22,7 @@ def create_resource():
     firebase.add_resource(campus_code, resource_name, resource_data)
     return json.loads('{"message":"success"}')
 
-@app.route('/searchResource', methods=['POST'])
+@app.route('/searchResources', methods=['POST'])
 def search_resource():
     frontend_request = request.get_json()
     
