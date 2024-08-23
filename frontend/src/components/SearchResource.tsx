@@ -10,10 +10,7 @@ export type Resource = {
     website: string,
 }
 
-const SearchResult = ({ resource }: { resource: Resource }) => {
-
-    console.log(resource)
-
+const SearchResult = ({ resource }: { resource: Resource, quality: number }) => {
     return (
         <div className="resource-container">
             <div>

@@ -82,12 +82,12 @@ function Search() {
                 </div>
             </form>
 
-            <h5 className="search-query">Results for "{query}" at {campuses[location.state.campus as Campus]} ({results.length}):</h5>
+            <h5 className="search-query">Results for "{location.state.query}" at {campuses[location.state.campus as Campus]} ({results.length}):</h5>
 
             <div className="resource-list">
                 {
-                    results && results.map((result: Resource[], i: number) =>
-                        <SearchResult key={i} resource={result[2]}/>
+                    results && results.map((result: [number, string, Resource], i: number) =>
+                        <SearchResult key={i} resource={result[2]} quality={result[0]}/>
                     )
                 }
             </div>
