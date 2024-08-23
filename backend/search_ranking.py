@@ -16,24 +16,27 @@ def getJaccardSimilarity(target_keywords, resource_keywords):
 def rank_resources(campus, target_keywords, amount_desired):
     resources_for_campus = firebase.get_data_for_campus(campus) 
     resources_cunywide = firebase.get_data_for_campus('CUNY')
-    total_resources = resources_for_campus.append(resources_cunywide)
+    total_resources = resources_for_campus | resources_cunywide
 
     rankings = []
 
-    for resource in total_resources:
+    print(total_resources.items())
+
+    for resource_name, resource in total_resources.items():
         # find Jaccard similarity
         resource_keywords = resource['keywords']
         current_jaccard_similarity = getJaccardSimilarity(target_keywords, resource_keywords)
+
         # only find top-amount_desired resources by using heap
+        heapq.heappush(rankings, (current_jaccard_similarity, resource_name, resource))
+
         if len(rankings) == amount_desired:
-            heapq.heappop(rankings)
-        heapq.heappush(rankings, (-current_jaccard_similarity, resource))
-    
-    # since rankings is sorted as the minimum similarity having the most priority, 
+                    heapq.heappop(rankings)
+
+
+    # since rankings is sorted as the minimum similarity having the most priority,
     # append to result by traversing from the end to beginning of rankings
-    result = []
-    for i in range( len(rankings)-1, -1, -1):
-        result.append(rankings[i][1])
+    result = [x[2] for x in rankings[::-1]]
     
     return result
 
