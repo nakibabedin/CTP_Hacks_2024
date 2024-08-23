@@ -1,5 +1,6 @@
 import google.generativeai as genai
 import firebase
+import json
 
 # Read in the API Key from the local dot_env file
 with open('keys/gemini_api_key.txt', 'r') as file:
@@ -10,15 +11,15 @@ genai.configure(api_key=api_key)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 # function to send a request to Gemini
-def ask_gemini(prompt):
+def ask_gemini(prompt, tokens=60):
     response = model.generate_content(prompt,
         generation_config=genai.types.GenerationConfig(
             candidate_count=1,
-            max_output_tokens=60,
+            max_output_tokens=tokens,
             temperature=0.1,
         ),
     )
-    print(response.candidates[0].content.parts[0].text)
+#     print(response.candidates[0].content.parts[0].text)
 
     return response.candidates[0].content.parts[0].text
 
@@ -33,8 +34,8 @@ def get_keywords_from_description(description):
            I want it to be in the exact format that i describe:
            Write each keyword/phrase seperated by a , in a single string.
            I should be able get a list of keywords by calling response.split(",") in python
-           By keywords, I don't necessraily mean words that appear in the string but also words/phrases that generally describe the description well
-           Please give me no more than 40 keywords. If you have more, please choose the 40 strongest descriptions
+           By keywords, I don't necessarily mean words that appear in the string but also words/phrases that generally describe the description well
+           Please give me no more than 40 keywords.
            ''')
     return response.split(",") 
 
@@ -63,4 +64,26 @@ def categorize_text_keywords(text):
 #
 
 
+def generateResourceSchema(scraped_text):
+    response = ask_gemini(f'''
+                              I have some text that I scraped from a website of a resource at a CUNY college.
+                              I want you to summarize the information into a succinct description of services, and also return some structured data.
+                              Using this JSON schema:
+                                  ResourceData = {{
+                                      "campus": string; // This should be the specific CUNY campus this resource is from. Your options are: "BRCH BKLN CSTI HUNT JJAY LMAN MDEV NYCT QNSC CCNY YORK CUNY". CUNY is for resources that are not specific to a campus, and available to all campuses.
+                                      "name": string; // The resource's official name. This should be specific.
+                                      "location": string; // Where to physically access the resource. What address, building, room, etc.
+                                      "hours": string; // When this resource is available, 24/7, days of the week, time start and end, lunch breaks.
+                                      "phone": string; // The primary number to contact. Ensure this is a valid 10 digit phone number without the extension code, return the string with dashes in the spots you would traditionally see them.
+                                      "email": string; // The main email that the student should contact. Make sure this is a valid email format.
+                                      "website": string; // Leave as empty string.
+                                      "description": string; // This is the description you are generating.
+                                  }}
 
+                              If you did not find a definitive, specific answer for the location, hours, phone, or email, please return an empty string for that field.
+
+                              Here is the text:
+                              {scraped_text}
+                          ''', 500)
+
+    return response
