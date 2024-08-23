@@ -5,6 +5,7 @@ import gemini
 import firebase
 import keywords_parser
 import json
+import re
 
 driver = webdriver.Chrome()
 
@@ -47,6 +48,9 @@ for link in links:
 
     res['campus'] = input_campus
     res['website'] = link
+
+    pattern = r'[.$#\[\]/]'
+    res['name'] = re.sub(pattern, '', res['name'])
 
     json_res = json.dumps(res, indent=4)
     print(json_res)
