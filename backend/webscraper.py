@@ -57,12 +57,12 @@ for link in links:
     json_res = json.dumps(res, indent=4)
     print(json_res)
 
-    ans = input("Does this look right? (y/n)\n")
-    if ans == 'n':
-        with open('failed_links.txt', 'a') as f:
-            f.write(link + '\n')
+    # ans = input("Does this look right? (y/n)\n")
+    # if ans == 'n':
+    #     with open('failed_links.txt', 'a') as f:
+    #         f.write(link + '\n')
 
-        continue
+    #     continue
 
     campus_code = res['campus']
     resource_name = res['name']

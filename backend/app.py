@@ -27,8 +27,7 @@ def search_resource():
     frontend_request = request.get_json()
     
     campus_code = frontend_request['campus']
-    user_situation = frontend_request['query']
-    target_keywords = keywords_parser.process_situation(user_situation)
+    target_keywords = keywords_parser.process_situation(campus_code, frontend_request['query'])
     amount_of_results = frontend_request['amount']
 
     results = search_ranking.rank_resources( campus_code, target_keywords, amount_of_results )

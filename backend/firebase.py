@@ -10,22 +10,22 @@ firebase_admin.initialize_app(cred, {
 })
 
 def add_resource(campus, resource_name, resource_data):
-    ref = db.reference(f'/{campus}/{resource_name}')
+    ref = db.reference(f'/{campus}/resource/{resource_name}')
     ref.set( resource_data )
 
 # returns a python dictionary if a JSON obj
 def get_data_for_campus(campus):
-    ref = db.reference(f'/{campus}')
+    ref = db.reference(f'/{campus}/resource')
     return ref.get()
 
-def append_to_keywords(new_keywords):
-    ref = db.reference("all_keywords")
-    curr_keywords = ref.get()
-    curr_keywords_set = set(curr_keywords)
-    curr_keywords_set = curr_keywords_set.union(set(new_keywords))
-    ref.set(list(curr_keywords_set))
+def append_to_keywords(campus, new_keywords):
+    ref = db.reference(f"{campus}/keywords")
+    snapshot = ref.get()
+    curr_keywords = ref.get() if snapshot else []
+    all_keywords = list(set( curr_keywords + new_keywords ))
+    ref.set(list(all_keywords))
     return
 
-def get_keywords():
-    ref = db.reference("all_keywords")
+def get_keywords(campus):
+    ref = db.reference(f"{campus}/keywords")
     return ref.get()
