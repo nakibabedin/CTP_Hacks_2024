@@ -6,6 +6,7 @@ import firebase
 import keywords_parser
 import json
 import re
+import time
 
 driver = webdriver.Chrome()
 
@@ -32,6 +33,7 @@ for link in links:
 
     # Wait for the page to fully load
     driver.implicitly_wait(7)
+    time.sleep(5)
 
     html = driver.page_source
     soup = BeautifulSoup(html, "html.parser")

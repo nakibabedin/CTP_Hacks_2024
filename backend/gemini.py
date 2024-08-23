@@ -71,7 +71,7 @@ def generateResourceSchema(scraped_text):
                               Using this JSON schema:
                                   ResourceData = {{
                                       "campus": string; // This should be the specific CUNY campus this resource is from. Your options are: "BRCH BKLN CSTI HUNT JJAY LMAN MDEV NYCT QNSC CCNY YORK CUNY". CUNY is for resources that are not specific to a campus, and available to all campuses.
-                                      "name": string; // The resource's official name. This should be specific.
+                                      "name": string; // The resource's official name. This should be specific. Make sure not to inlcude any characters that would make this field input an invalid path for the Firebase realtime database (e.g. don't use the special character '.')
                                       "location": string; // Where to physically access the resource. What address, building, room, etc.
                                       "hours": string; // When this resource is available, 24/7, days of the week, time start and end, lunch breaks.
                                       "phone": string; // The primary number to contact. Ensure this is a valid 10 digit phone number without the extension code, return the string with dashes in the spots you would traditionally see them.
