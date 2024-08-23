@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 function App() {
     const [campus, setCampus] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -20,7 +21,18 @@ function App() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const res = await searchResources(campus, searchQuery);
+        setLoading(true);
+
+        let res;
+
+        try {
+            res = await searchResources(campus, searchQuery);
+        } catch (err) {
+            console.error(err);
+            alert('Something went wrong, please try again later.');
+            setLoading(false);
+        }
+
         console.log(res.message);
 
         navigate('/search', { state: { query: searchQuery, campus: campus, results: res.results } });
@@ -56,7 +68,11 @@ function App() {
                         required
                     />
 
-                    <button>Search</button>
+                    {
+                        loading
+                            ? <button className='search-button' disabled>Searching...</button>
+                            : <button className='search-button'>Search</button>
+                    }
                 </div>
             </form>
         </>

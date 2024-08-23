@@ -22,6 +22,7 @@ export const campuses = {
 function Search() {
     const location = useLocation();
 
+    const [loading, setLoading] = useState(false);
     const [campus, setCampus] = useState<Campus>(location.state.campus);
     const [query, setQuery] = useState(location.state.query);
 
@@ -37,7 +38,18 @@ function Search() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const res = await searchResources(campus, query);
+        setLoading(true);
+
+        let res;
+
+        try {
+            res = await searchResources(campus, query);
+        } catch (err) {
+            console.error(err);
+            alert('Something went wrong, please try again later.');
+            setLoading(false);
+        }
+
         console.log(res.message);
 
         navigate('/search', { state: { query: query, campus: campus, results: res.results } });
@@ -78,7 +90,11 @@ function Search() {
                         required
                     />
 
-                    <button>Search</button>
+                    {
+                        loading
+                            ? <button className='search-button' disabled>Searching...</button>
+                            : <button className='search-button'>Search</button>
+                    }
                 </div>
             </form>
 
