@@ -96,7 +96,6 @@ const Create = () => {
                     placeholder='Where should people go to find this resource?'
                     value={formData.location}
                     onChange={handleChange}
-                    required
                 /><br /><br />
 
                 <label htmlFor='hours'>Hours of Operation:</label>
@@ -107,7 +106,6 @@ const Create = () => {
                     placeholder='When is this resource open for students?'
                     value={formData.hours}
                     onChange={handleChange}
-                    required
                 />
 
                 <br /><br />
@@ -122,7 +120,6 @@ const Create = () => {
                     placeholder='Enter the best number for students to contact.'
                     value={formData.phone}
                     onChange={handleChange}
-                    required
                 /><br /><br />
 
                 <label htmlFor="email">Email:</label>
@@ -133,7 +130,6 @@ const Create = () => {
                     placeholder='Enter resource email address.'
                     value={formData.email}
                     onChange={handleChange}
-                    required
                 /><br /><br />
 
                 <label htmlFor="website">Website:</label>
@@ -144,7 +140,6 @@ const Create = () => {
                     placeholder='Enter the website for this resource, or other helpful links.'
                     value={formData.website}
                     onChange={handleChange}
-                    required
                 /><br />
 
                 <h3>Description</h3>
