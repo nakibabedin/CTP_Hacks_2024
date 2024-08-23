@@ -1,0 +1,29 @@
+.resource-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+
+    max-width: 1000px;
+}
+.search-query {
+    align-self: flex-start;
+    text-align: start;
+}
+
+@media (max-width: 1200px) {
+    .resource-list {
+        max-width: 600px;
+    }
+}
+
+@media (max-width: 768px) {
+    .resource-list {
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .resource-list {
+        max-width: 300px;
+    }
+}

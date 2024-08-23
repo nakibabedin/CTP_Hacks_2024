@@ -2,10 +2,13 @@ import {useState} from 'react'
 // import {createResource} from './functions/createResource';
 import './App.css'
 import {searchResources} from "./functions/searchResources.ts";
+import {useNavigate} from "react-router-dom";
 
 function App() {
     const [campus, setCampus] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
+
+    const navigate = useNavigate();
 
     // useEffect(() => {
     // 	const getMsg = async () => {p
@@ -27,7 +30,9 @@ function App() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const res = await searchResources(campus, searchQuery);
-        console.log(res);
+        console.log(res.message);
+
+        navigate('/search', { state: { query: searchQuery, campus: campus, results: res.results } });
     }
 
     return (

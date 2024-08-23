@@ -1,0 +1,25 @@
+.resource-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: start;
+    align-items: flex-start;
+    overflow: clip;
+    max-height: 10em;
+    overflow-clip-margin: content-box 0;
+    /*border: slategray 1px solid;*/
+    /*border-radius: 0.5em;*/
+    /*padding: 1.2em;*/
+}
+
+.resource-title {
+    font-size: 1.5em;
+    font-weight: normal;
+    margin-right: 1em;
+}
+
+.resource-description {
+    font-size: 1rem;
+    margin: 0;
+    font-weight: lighter;
+}

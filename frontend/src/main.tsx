@@ -1,4 +1,3 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
     createBrowserRouter,
@@ -8,6 +7,7 @@ import {
 import App from './App.tsx'
 import Create from './Create.tsx'
 import './index.css'
+import Search from "./Search.tsx";
 
 const router = createBrowserRouter([
     {
@@ -17,11 +17,13 @@ const router = createBrowserRouter([
     {
         path: "/create",
         element: <Create />,
+    },
+    {
+        path: "/search",
+        element: <Search />,
     }
 ]);
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-      <RouterProvider router={router} />
-  </StrictMode>,
+    <RouterProvider router={router} />
 )
