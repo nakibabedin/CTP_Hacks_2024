@@ -35,8 +35,12 @@ def rank_resources(campus, target_keywords, amount_desired):
 
 
     result = []
-    while rankings and rankings[0] != 0: 
-        result.append( heapq.heappop(rankings) )
+    while rankings:
+        item = heapq.heappop(rankings)
+        if item[0] == 0:
+            continue
 
-    return  [num for num in result[::-1] if num != 0]
+        result.append(item)
+
+    return result[::-1]
 

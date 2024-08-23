@@ -16,7 +16,7 @@ def ask_gemini(prompt, tokens=256):
         generation_config=genai.types.GenerationConfig(
             candidate_count=1,
             max_output_tokens=tokens,
-            temperature=0.1,
+            temperature=0.3,
         ),
     )
 #     print(response.candidates[0].content.parts[0].text)
@@ -35,12 +35,12 @@ def get_keywords_from_description(description):
            Return these keywords as a comma-separated list.
            I should be able to use .split(',') on the response.
 
-           Please give me no more than 40 keywords.
+           Please give me no more than 15 keywords.
         ''')
     return response.split(",") 
 
 
-def categorize_text_keywords(  campus , query ):
+def categorize_text_keywords(campus , query):
     keywords = firebase.get_keywords(campus)
     response = ask_gemini( f'''
     Given this list of keywords:
@@ -49,13 +49,13 @@ def categorize_text_keywords(  campus , query ):
     And a CUNY student's situation: 
     {query}
 
-    Return all keywords relevance to the situation. Generate as many keywords as you reasonably can generate
-    You may also infer what might be useful based on the situation, don't limit yourself to only words that appear in the student's situation. All the words you return must be a direct match with some word/phrase in the list of keywords.
+    Return 50 keywords that are most important to the situation.
+    All the words you return must be a direct match with some word/phrase in the list of keywords.
 
     Return these keywords as a comma-separated list.
     I should be able to use .split(',') on the response.
     If there are no relevant keywords, return an empty string
-    ''', tokens=5000)
+    ''', tokens=600)
     res = response.split(",")
     return res
 
