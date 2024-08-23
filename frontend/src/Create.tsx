@@ -70,6 +70,7 @@ const Create = () => {
                     <option value="QNSC">Queens College</option>
                     <option value="CCNY">The City College of New York</option>
                     <option value="YORK">York College</option>
+                    <option value="CUNY">CUNY Central</option>
                 </select>
 
                 <br /><br />
