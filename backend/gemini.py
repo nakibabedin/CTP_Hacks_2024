@@ -20,6 +20,8 @@ def ask_gemini(prompt, tokens=256):
         ),
     )
 #     print(response.candidates[0].content.parts[0].text)
+    if not response.candidates or response.candidates[0]:
+        return ""
 
     return response.candidates[0].content.parts[0].text
 
@@ -83,7 +85,7 @@ def generateResourceSchema(scraped_text):
                                   }}
 
                               If you did not find a definitive, specific answer for the location, hours, phone, or email, please return an empty string for that field.
-
+                              If the website seems to have returned an error, return an empty string
                               Here is the text:
                               {scraped_text}
                           ''', 500)

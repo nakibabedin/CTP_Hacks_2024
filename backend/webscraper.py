@@ -11,6 +11,9 @@ import time
 driver = webdriver.Chrome()
 
 def clean_and_parse_json(gemini_output):
+    if not gemini_output:
+        return None
+
     # Remove triple backticks (```)
     cleaned_json = gemini_output.replace("```", "")
     cleaned_json = cleaned_json[4:]
@@ -33,7 +36,7 @@ for link in links:
 
     # Wait for the page to fully load
     driver.implicitly_wait(7)
-    time.sleep(5)
+    time.sleep(6)
 
     html = driver.page_source
     soup = BeautifulSoup(html, "html.parser")
@@ -57,19 +60,22 @@ for link in links:
     json_res = json.dumps(res, indent=4)
     print(json_res)
 
-    # ans = input("Does this look right? (y/n)\n")
-    # if ans == 'n':
-    #     with open('failed_links.txt', 'a') as f:
-    #         f.write(link + '\n')
+    try :
+        # ans = input("Does this look right? (y/n)\n")
+        # if ans == 'n':
+        #     with open('failed_links.txt', 'a') as f:
+        #         f.write(link + '\n')
 
-    #     continue
+        #     continue
 
-    campus_code = res['campus']
-    resource_name = res['name']
-    resource_data = keywords_parser.process_description(res)
+        campus_code = res['campus']
+        resource_name = res['name']
+        resource_data = keywords_parser.process_description(res)
 
-    firebase.add_resource(campus_code, resource_name, resource_data)
-
+        firebase.add_resource(campus_code, resource_name, resource_data)
+    except Exception as e:
+        with open('failed_links.txt', 'a') as f:
+            f.write(link + '\n')
 
 
 
