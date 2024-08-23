@@ -34,9 +34,9 @@ def rank_resources(campus, target_keywords, amount_desired):
             heapq.heappop(rankings)
 
 
-    # since rankings is sorted as the minimum similarity having the most priority,
-    # append to result by traversing from the end to beginning of rankings
-    result = [x[2] for x in rankings[::-1]]
-    
-    return result
+    result = []
+    while rankings: 
+        result.append( heapq.heappop(rankings) )
+
+    return result[::-1]
 

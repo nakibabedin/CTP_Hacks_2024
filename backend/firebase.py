@@ -10,8 +10,8 @@ firebase_admin.initialize_app(cred, {
 })
 
 def add_resource(campus, resource_name, resource_data):
-    ref = db.reference(f'/{campus}')
-    ref.update({ resource_name:resource_data })
+    ref = db.reference(f'/{campus}/{resource_name}')
+    ref.set( resource_data )
 
 # returns a python dictionary if a JSON obj
 def get_data_for_campus(campus):
