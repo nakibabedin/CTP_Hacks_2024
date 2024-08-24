@@ -5,6 +5,8 @@ import {Resource} from "./components/SearchResource.tsx";
 import {useState} from "react";
 import {searchResources} from "./functions/searchResources.ts";
 
+import logo from './assets/coogle.png';
+
 export const campuses = {
     CUNY: 'CUNY',
     HUNT: 'Hunter College',
@@ -53,6 +55,7 @@ function Search() {
         console.log(res.message);
 
         navigate('/search', { state: { query: query, campus: campus, results: res.results } });
+        setLoading(false);
     }
 
     const results = location.state.results;
@@ -62,7 +65,7 @@ function Search() {
 
     return (
         <div className="search-container">
-            <img className='logo' src='/src/assets/coogle.png' alt='Coogle Logo' height={200}/>
+            <img className='logo' src={logo} alt='Coogle Logo' height={200}/>
             <form className='search-form' onSubmit={handleSubmit} style={{gap: '1em', marginBottom: '1em'}}>
                 <div>
                     <label style={{marginRight: '0.7em'}}>Campus:</label>

@@ -7,7 +7,7 @@ export const createResource = async (data : FormData) => {
 		data: data
 	})
 
-	const res = await fetch('http://127.0.0.1:5000/createResource', {
+	const res = await fetch('https://www.coogle.live/createResource', {
 		method: "POST",
 		body: JSON.stringify({
 			campus: data.campus,

@@ -3,6 +3,8 @@ import {useState} from 'react'
 import './App.css'
 import {searchResources} from "./functions/searchResources.ts";
 import {useNavigate} from "react-router-dom";
+import logo from './assets/coogle.png';
+
 
 function App() {
     const [campus, setCampus] = useState('');
@@ -40,7 +42,7 @@ function App() {
 
     return (
         <>
-            <img className='logo' src='/src/assets/coogle.png' alt='Coogle Logo' height={200}/>
+            <img className='logo' src={logo} alt='Coogle Logo' height={200}/>
             <form className='search-form' onSubmit={handleSubmit}>
                 <div>
                 <label style={{marginRight: '0.7em'}}>Campus:</label>
