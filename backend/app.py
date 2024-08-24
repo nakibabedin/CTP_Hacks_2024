@@ -8,9 +8,9 @@ import search_ranking
 app = Flask(__name__)
 CORS(app)
 
-# @app.route('/', methods=['GET'])
-# def get_data():
-#     return json.loads('{"message":"Hello World"}')
+@app.route('/', methods=['GET'])
+def get_data():
+    return json.loads('{"message":"Hello World"}')
 
 @app.route('/createResource', methods=['POST'])
 def create_resource():
@@ -40,4 +40,4 @@ def search_resource():
     return json.dumps(response)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=80)
